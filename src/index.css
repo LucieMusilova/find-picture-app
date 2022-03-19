@@ -75,6 +75,7 @@ html {
 }
 .hints__li:hover, .hints__li:focus, .hints__li:active {
   background-color: #d4bebe;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 690px) {
