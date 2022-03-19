@@ -1,24 +1,37 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Header from './components/Header';
+import Hints from './components/Hints';
+import Searchbox from './components/Searchbox';
+import Pictures from './components/Pictures';
+import images from "./images.js";
+import NotFound from './components/NotFound';
+
 
 function App() {
+
+  const [sort, setSort] = useState(images);
+
+  const handleFilter = (value) => {
+    value === "all" ? setSort(images) :
+    setSort(images.filter(img => img.title === value))
+  }
+
+  const handleSearch = (event) =>{
+    let value = event.target.value.toLowerCase();
+    value === "" ? setSort(images) : setSort(images.filter(name => name.type.includes(value)));
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <Searchbox handleSearch={handleSearch}/>
+      <Hints handleFilter={handleFilter}/>
+      {sort.length === 0 ?
+       <NotFound /> : <Pictures sort={sort} />
+        }
+    </>
   );
 }
 
